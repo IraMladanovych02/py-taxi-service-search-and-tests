@@ -43,12 +43,11 @@ class ManufacturerSearchTests(TestCase):
             password="test123",
         )
         self.client.force_login(self.user)
-
-    def test_search_manufacturer(self):
         Manufacturer.objects.create(name="Audi")
         Manufacturer.objects.create(name="Mercedes")
         Manufacturer.objects.create(name="Toyota")
 
+    def test_search_manufacturer(self):
         response = self.client.get(MANUFACTURER_URL, {"name": "Audi"})
 
         self.assertEqual(response.status_code, 200)
@@ -60,10 +59,6 @@ class ManufacturerSearchTests(TestCase):
         self.assertEqual(len(response.context["manufacturer_list"]), 1)
 
     def test_no_search_query(self):
-        Manufacturer.objects.create(name="Audi")
-        Manufacturer.objects.create(name="Mercedes")
-        Manufacturer.objects.create(name="Toyota")
-
         response = self.client.get(MANUFACTURER_URL)
 
         self.assertEqual(response.status_code, 200)
@@ -170,12 +165,11 @@ class DriverSearchTests(TestCase):
             password="test123",
         )
         self.client.force_login(self.user)
-
-    def test_search_driver(self):
         Driver.objects.create(username="driver1", license_number="11111")
         Driver.objects.create(username="driver2", license_number="22222")
         Driver.objects.create(username="driver3", license_number="33333")
 
+    def test_search_driver(self):
         response = self.client.get(DRIVER_URL, {"username": "driver1"})
 
         self.assertEqual(response.status_code, 200)
@@ -185,10 +179,6 @@ class DriverSearchTests(TestCase):
         self.assertEqual(len(response.context["driver_list"]), 1)
 
     def test_no_search_query(self):
-        Driver.objects.create(username="driver1", license_number="11111")
-        Driver.objects.create(username="driver2", license_number="22222")
-        Driver.objects.create(username="driver3", license_number="33333")
-
         response = self.client.get(DRIVER_URL)
 
         self.assertEqual(response.status_code, 200)
